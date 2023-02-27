@@ -1,6 +1,6 @@
 ### C - BINARY TREES 🌴:
 
-## This project deals with the fundamentals of binary trees, the different traversal methods to go through a binary tree, and the different types of binary trees (complete, full, perfect, and balanced). It is designed to provide an understanding of the structure of binary trees, and how to traverse them using various methods. Additionally, students will learn about the different types of binary trees, such as complete, full, perfect, and balanced trees, and how they differ from one another.
+### This project deals with the fundamentals of binary trees, the different traversal methods to go through a binary tree, and the different types of binary trees (complete, full, perfect, and balanced). It is designed to provide an understanding of the structure of binary trees, and how to traverse them using various methods. Additionally, students will learn about the different types of binary trees, such as complete, full, perfect, and balanced trees, and how they differ from one another.
 
 A binary tree is a data structure comprised of nodes that store data and two references to other nodes (called left and right child nodes). 
 Binary trees are used to store and organize data in a hierarchical way. 
