@@ -10,7 +10,7 @@ Popular traversal algorithms include pre-order, in-order, and post-order.
 
 
 
-# This project deals with the fundamentals of binary trees, the different traversal methods to go through a binary tree, and the different types of binary trees (complete, full, perfect, and balanced). It is designed to provide an understanding of the structure of binary trees, and how to traverse them using various methods. Additionally, students will learn about the different types of binary trees, such as complete, full, perfect, and balanced trees, and how they differ from one another.
+## This project deals with the fundamentals of binary trees, the different traversal methods to go through a binary tree, and the different types of binary trees (complete, full, perfect, and balanced). It is designed to provide an understanding of the structure of binary trees, and how to traverse them using various methods. Additionally, students will learn about the different types of binary trees, such as complete, full, perfect, and balanced trees, and how they differ from one another.
 
 
 ### Environment
