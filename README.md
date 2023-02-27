@@ -17,5 +17,5 @@ Popular traversal algorithms include pre-order, in-order, and post-order.
 
 ## CODESMITHES 🦊&🌻
 
-## [iVGeek](https://github.com/iVGeek)|
-## [hebaomar94](https://github.com/hebaomar94)|
+#### [iVGeek](https://github.com/iVGeek)|
+#### [hebaomar94](https://github.com/hebaomar94)|
