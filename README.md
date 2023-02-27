@@ -12,6 +12,7 @@ Popular traversal algorithms include pre-order, in-order, and post-order.
 
 
 ### Environment
+
 * Language:  C
 * OS: compiled on Ubuntu 20.04 LTS using gcc
 
