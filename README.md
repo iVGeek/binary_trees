@@ -13,6 +13,6 @@ Popular traversal algorithms include pre-order, in-order, and post-order.
 
 ## CODESMITHES 🦊&🌻
 
-[GitHub](https://github.com/iVGeek)|iVGeek
-[GitHub](https://github.com/hebaomar94)|hebaomar94
+[iVGeek](https://github.com/iVGeek)|
+[hebaomar94](https://github.com/hebaomar94)|
 
