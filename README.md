@@ -5,3 +5,14 @@ Binary trees are used to store and organize data in a hierarchical way.
 The root node is the topmost node in the tree and each node can have up to two children. Binary trees allow efficient searching, insertion, and deletion of data. 
 Binary tree traversal is a process of visiting each node in a tree in a certain order. 
 Popular traversal algorithms include pre-order, in-order, and post-order.
+
+
+### Environment
+* Language:  C
+* OS: compiled on Ubuntu 20.04 LTS using gcc
+
+## CODESMITHES 🦊&🌻
+
+[GitHub](https://github.com/iVGeek)|iVGeek
+[GitHub](https://github.com/hebaomar94)|hebaomar94
+
