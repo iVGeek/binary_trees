@@ -1,12 +1,13 @@
-#include "binary_trees.h"
+include "binary_trees.h"
 
 /**
- * heap_to_sorted_array - converts a Binary Max Heap to a sorted array of integers
+ * heap_extract - extracts the root node of a Max Binary Heap
+ * @root: a double pointer to the root node of heap
  *
- * @root: double pointer to the root node of heap
- * Return: value stored in the root node
+ * Return: the value stored in the root node
+ *         0 on failure
  */
 int heap_extract(heap_t **root)
 {
-	return (root);
+
 }
