@@ -1,149 +1,115 @@
 #include "binary_trees.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
 
-typedef struct avl_node_s {
-    int value;
-    struct avl_node_s *left;
-    struct avl_node_s *right;
-    int height;
-} avl_t;
-
-// A utility function to get the maximum of two integers
-int max(int a, int b)
+/**
+ * avl_insert_full - Inserts a value
+ *
+ * @tree: pointer to the root
+ * @parent: parent of node
+ * @value: the value
+ * Return: pointer to the new_node node
+ */
+avl_t *avl_insert_full(avl_t *tree, avl_t *parent, int value)
 {
-    return (a > b) ? a : b;
+	avl_t *new_node;
+
+	if (tree == NULL)
+	{
+		new_node = binary_tree_node(parent, value);
+		if (parent->n > new_node->n)
+			parent->left = new_node;
+		else
+			parent->right = new_node;
+		return (new_node);
+	}
+	else if (value == tree->n)
+		return (NULL);
+	else if (value < tree->n)
+		return (avl_insert_full(tree->left, tree, value));
+	else
+		return (avl_insert_full(tree->right, tree, value));
 }
 
-// A utility function to get the height of the tree
-int height(avl_t *node)
-{
-    if (node == NULL)
-        return 0;
 
-    return node->height;
+/**
+ * val_balancer - rebalance an AVL tree if needed
+ *
+ * @root: pointer to the root of the tree
+ * @tree: pointer to the node to be rebalanced
+ * @value: inserted value
+ * Return: 0
+ */
+
+void val_balancer(avl_t **root, avl_t *tree, int value)
+{
+	int new_balance;
+
+	new_balance = binary_tree_balance(tree);
+	if (new_balance > 1)
+	{
+		if (tree->left->n > value)
+		{
+			if (*root == tree)
+				*root = tree->left;
+			binary_tree_rotate_right(tree);
+		}
+		else
+		{
+			if (*root == tree)
+				*root = tree->left->right;
+			binary_tree_rotate_left(tree->left);
+			binary_tree_rotate_right(tree);
+		}
+	}
+	if (new_balance < -1)
+	{
+		if (tree->right->n < value)
+		{
+			if (*root == tree)
+				*root = tree->right;
+			binary_tree_rotate_left(tree);
+		}
+		else
+		{
+			if (*root == tree)
+				*root = tree->right->left;
+			binary_tree_rotate_right(tree->right);
+			binary_tree_rotate_left(tree);
+		}
+	}
 }
 
-// A utility function to right rotate subtree rooted with y
-// See the diagram given above.
-avl_t *rightRotate(avl_t *y)
-{
-    avl_t *x = y->left;
-    avl_t *T2 = x->right;
 
-    // Perform rotation
-    x->right = y;
-    y->left = T2;
-
-    // Update heights
-    y->height = max(height(y->left), height(y->right)) + 1;
-    x->height = max(height(x->left), height(x->right)) + 1;
-
-    // Return new root
-    return x;
-}
-
-// A utility function to left rotate subtree rooted with x
-// See the diagram given above.
-avl_t *leftRotate(avl_t *x)
-{
-    avl_t *y = x->right;
-    avl_t *T2 = y->left;
-
-    // Perform rotation
-    y->left = x;
-    x->right = T2;
-
-    //  Update heights
-    x->height = max(height(x->left), height(x->right)) + 1;
-    y->height = max(height(y->left), height(y->right)) + 1;
-
-    // Return new root
-    return y;
-}
-
-// Get Balance factor of node N
-int getBalance(avl_t *N)
-{
-    if (N == NULL)
-        return 0;
-    return height(N->left) - height(N->right);
-}
-
-// Recursive function to insert a key in the subtree rooted
-// with node and returns the new root of the subtree.
-avl_t *insert(avl_t *node, int value)
-{
-    /* 1.  Perform the normal BST insertion */
-    if (node == NULL)
-        return (avl_t *)malloc(sizeof(avl_t));
-
-    if (value < node->value)
-        node->left = insert(node->left, value);
-    else if (value > node->value)
-        node->right = insert(node->right, value);
-    else // Equal keys are not allowed in BST
-        return node;
-
-    /* 2. Update height of this ancestor node */
-    node->height = 1 + max(height(node->left),
-                           height(node->right));
-
-    /* 3. Get the balance factor of this ancestor
-        node to check whether this node became
-        unbalanced */
-    int balance = getBalance(node);
-
-    // If this node becomes unbalanced, then
-    // there are 4 cases
-
-    // Left Left Case
-    if (balance > 1 && value < node->left->value)
-        return rightRotate(node);
-
-    // Right Right Case
-    if (balance < -1 && value > node->right->value)
-        return leftRotate(node);
-
-    // Left Right Case
-    if (balance > 1 && value > node->left->value) {
-        node->left = leftRotate(node->left);
-        return rightRotate(node);
-    }
-
-    // Right Left Case
-    if (balance < -1 && value < node->right->value) {
-        node->right = rightRotate(node->right);
-        return leftRotate(node);
-    }
-
-    /* return the (unchanged) node pointer */
-    return node;
-}
-
-// A utility function to print preorder traversal
-// of the tree.
-// The function also prints height of every node
-void preOrder(avl_t *root)
-{
-    if (root != NULL) {
-        printf("%d ", root->value);
-        preOrder(root->left);
-        preOrder(root->right);
-    }
-}
-
-// A function to insert a value in an AVL Tree
+/**
+ * avl_insert - Insets the value in avl
+ *
+ * @tree: double pointer to root
+ * @value: the value
+ * Return: pointer to the new node
+ */
 avl_t *avl_insert(avl_t **tree, int value)
 {
-    // If tree is NULL, create a new node and return it
-    if (tree == NULL)
-        return NULL;
+	avl_t *new_node, *predecessor;
 
-    // Insert the value into the tree
-    *tree = insert(*tree, value);
+	if (tree == NULL)
+		return (NULL);
+	if (*tree == NULL)
+	{
+		new_node = binary_tree_node(NULL, value);
+		*tree = new_node;
+		return (new_node);
+	}
+	new_node = avl_insert_full(*tree, NULL, value);
 
-    // Return the created node
-    return *tree;
+	if (new_node == NULL)
+		return (NULL);
+
+	predecessor = new_node->parent;
+
+	while (predecessor != NULL)
+	{
+		val_balancer(tree, predecessor, value);
+		predecessor = predecessor->parent;
+	}
+
+	return (new_node);
 }
