@@ -1,34 +1,77 @@
 #include "binary_trees.h"
 
-/* This function builds a Max Binary Heap tree from an array */
-heap_t *array_to_heap(int *array, size_t size)
+// C Function to Extract Root Node of a Max Binary Heap
+int heap_extract(heap_t **root) 
 {
-    /* Check for null pointer and empty array */
-    if (array == NULL || size == 0)
-        return NULL;
-
-    /* Allocate memory for the new heap */
-    heap_t *heap = malloc(sizeof(heap_t));
-    if (heap == NULL)
-        return NULL;
-
-    /* Initialize the heap */
-    heap->size = size;
-    heap->data = malloc(size * sizeof(int));
-    if (heap->data == NULL)
+    // Check if root is NULL
+    if (!(*root)) 
+        return 0;
+    
+    // Store the value of root node
+    int max = (*root)->data;
+    
+    // Get the last level-order node of the heap
+    heap_t *lastNode = *root;
+    while (lastNode->left) 
+        lastNode = lastNode->left;
+    
+    // Swap the root node with lastLevel node
+    int temp = (*root)->data;
+    (*root)->data = lastNode->data;
+    lastNode->data = temp;
+    
+    // Get the parent of last level node
+    heap_t *parent = lastNode->parent;
+    
+    // Set the appropriate child of parent as NULL
+    if (parent->left == lastNode) 
+        parent->left = NULL;
+    else
+        parent->right = NULL;
+    
+    // Free the last level node
+    free(lastNode);
+    
+    // Rebuild the heap if necessary
+    heap_t *curr = *root;
+    while (curr->left || curr->right) 
     {
-        free(heap);
-        return NULL;
+        // If both children exist, swap with the larger child
+        if (curr->left && curr->right) 
+        {
+            if (curr->left->data > curr->right->data) 
+            {
+                int temp = curr->data;
+                curr->data = curr->left->data;
+                curr->left->data = temp;
+                curr = curr->left;
+            } 
+            else 
+            {
+                int temp = curr->data;
+                curr->data = curr->right->data;
+                curr->right->data = temp;
+                curr = curr->right;
+            }
+        } 
+        // If only left child exists, swap with it
+        else if (curr->left) 
+        {
+            int temp = curr->data;
+            curr->data = curr->left->data;
+            curr->left->data = temp;
+            curr = curr->left;
+        } 
+        // If only right child exists, swap with it
+        else 
+        {
+            int temp = curr->data;
+            curr->data = curr->right->data;
+            curr->right->data = temp;
+            curr = curr->right;
+        }
     }
-
-    /* Copy the array into the heap */
-    for (size_t i = 0; i < size; i++)
-        heap->data[i] = array[i];
-
-    /* Build the heap */
-    for (int i = (heap->size - 2) / 2; i >= 0; i--)
-        heapify(heap, i);
-
-    /* Return a pointer to the root node of the created binary heap */
-    return heap;
+    
+    // Return the value stored in root node
+    return max;
 }
